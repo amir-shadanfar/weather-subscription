@@ -1,0 +1,74 @@
+version: '3.6'
+services:
+  teknasion-api:
+    image: teknasion/api
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    container_name: teknasion-api
+    environment:
+      - APACHE_RUN_USER=#1000
+      - APACHE_RUN_GROUP=#1000
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - 8008:80
+    links:
+      - teknasion-redis
+      - teknasion-mysql-db
+      - teknasion-phpmyadmin
+    logging:
+      driver: json-file
+    restart: always
+    networks:
+      backend:
+        aliases:
+          - app
+
+  teknasion-mysql-db:
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: teknasion-mysql-db
+    volumes:
+      - ./run/var:/var/lib/mysql
+      - ./logs/mysql:/var/log/mysql
+      - ./data:/docker-entrypoint-initdb.d
+      - ./config/mysql/:/etc/mysql/conf.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=securerootpassword
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    networks:
+      backend:
+        aliases:
+          - teknasion-mysql-db
+
+  teknasion-redis:
+    container_name: teknasion-redis
+    image: redis
+    ports:
+      - "1234:1234"
+    networks:
+      backend:
+        aliases:
+          - teknasion-redis
+
+  teknasion-phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: teknasion-phpmyadmin
+    links:
+        - teknasion-mysql-db:teknasion-mysql-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=securerootpassword
+      - PMA_HOST=teknasion-mysql-db
+    ports:
+      - "2525:80"
+    networks:
+      backend:
+        aliases:
+          - teknasion-mysql-db
+
+networks:
+  backend:
+    name: teknasion_net

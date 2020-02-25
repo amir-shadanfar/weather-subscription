@@ -1,0 +1,11 @@
+src/vendor
+src/storage
+run
+logs
+data
+.idea
+src/composer.lock
+*.icloud
+src/.DS_Store
+.DS_Store
+src/.env
