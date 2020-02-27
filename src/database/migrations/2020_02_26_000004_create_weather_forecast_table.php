@@ -26,15 +26,13 @@ class CreateWeatherForecastTable extends Migration
             $table->float('humidity')->nullable();
             $table->float('temp');
             $table->date('date');
-            $table->integer('cities_id');
+            $table->unsignedInteger('city_id');
 
-            $table->index(["cities_id"], 'fk_weather_forecast_cities1_idx');
+            $table->index(["city_id"], 'fk_weather_forecast_cities1_idx');
 
 
-            $table->foreign('cities_id', 'fk_weather_forecast_cities1_idx')
-                ->references('id')->on('cities')
-                ->onDelete('no action')
-                ->onUpdate('no action');
+            $table->foreign('city_id')
+                ->references('id')->on('cities');
         });
     }
 

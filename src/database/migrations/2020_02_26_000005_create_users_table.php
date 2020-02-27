@@ -29,28 +29,26 @@ class CreateUsersTable extends Migration
             $table->time('timezone');
             $table->string('operation_system', 10)->nullable();
             $table->text('access_token')->nullable();
-            $table->integer('plans_id');
-            $table->integer('gift_codes_id')->nullable();
-            $table->integer('cities_id');
+            $table->unsignedInteger('plan_id');
+            $table->unsignedInteger('gift_code_id')->nullable();
+            $table->unsignedInteger('city_id');
 
-            $table->index(["gift_codes_id"], 'fk_users_gift_codes1_idx');
-
-            $table->index(["cities_id"], 'fk_users_cities1_idx');
-
-            $table->index(["plans_id"], 'fk_users_plans_idx');
+            $table->index(["gift_code_id"]);
+            $table->index(["city_id"]);
+            $table->index(["plan_id"]);
 
 
-            $table->foreign('plans_id', 'fk_users_plans_idx')
+            $table->foreign('plan_id')
                 ->references('id')->on('plans')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('gift_codes_id', 'fk_users_gift_codes1_idx')
+            $table->foreign('gift_code_id')
                 ->references('id')->on('gift_codes')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('cities_id', 'fk_users_cities1_idx')
+            $table->foreign('city_id')
                 ->references('id')->on('cities')
                 ->onDelete('no action')
                 ->onUpdate('no action');
@@ -62,8 +60,8 @@ class CreateUsersTable extends Migration
      *
      * @return void
      */
-     public function down()
-     {
-       Schema::dropIfExists($this->tableName);
-     }
+    public function down()
+    {
+        Schema::dropIfExists($this->tableName);
+    }
 }
