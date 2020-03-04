@@ -4,7 +4,6 @@
 
 use App\User;
 use Faker\Generator as Faker;
-use Hash;
 use Illuminate\Support\Str;
 
 /*
@@ -25,13 +24,12 @@ $factory->define(User::class, function (Faker $faker) {
     $city = \App\City::inRandomOrder()->first();
 
     return [
-        'name'             => $faker->name,
         'email'            => $faker->email,
-        'password'         => Hash::make('123456'),
+        'password'         => \Illuminate\Support\Facades\Crypt::encrypt('123456'),
         'language'         => $faker->languageCode,
         'timezone'         => $faker->timezone,
         'operating_system' => $faker->randomElement(['mac', 'windows', 'linux']),
-        'access_token'     => Str::random(10),
+        'access_token'     => Str::random(60),
         'plan_id'          => !is_null($plan) ? $plan->id : factory(\App\Plan::class)->create()->id,
         'gift_code_id'     => !is_null($giftCode) ? $giftCode->id : factory(\App\GiftCode::class)->create()->id,
         'city_id'          => !is_null($city) ? $city->id : factory(\App\City::class)->create()->id,

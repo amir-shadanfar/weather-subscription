@@ -19,9 +19,9 @@ use Illuminate\Support\Str;
 $factory->define(\App\WeatherForecast::class, function (Faker $faker) {
     $city = \App\City::inRandomOrder()->first();
     return [
-        'humidity' => '',
-        'temp'     => '',
-        'date'     => '',
+        'humidity' => $faker->randomFloat(2,1,100),
+        'temp'     => $faker->randomFloat(2,1,100),
+        'date'     => $faker->date(),
         'city_id'  => !is_null($city) ? $city->id : factory(\App\City::class)->create()->id,
     ];
 });

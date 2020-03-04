@@ -19,6 +19,6 @@ use Illuminate\Support\Str;
 $factory->define(\App\GiftCode::class, function (Faker $faker) {
     return [
         'code'       => Str::random(5),
-        'expired_at' => $faker->randomElement([null, Carbon\Carbon::now()]),
+        'expired_at' => $faker->dateTimeBetween('now','+6 month')
     ];
 });

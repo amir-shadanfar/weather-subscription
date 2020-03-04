@@ -14,6 +14,12 @@ class PlansTableSeeder extends Seeder
         \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         \App\Plan::truncate();
 
-        factory(\App\Plan::class, 2)->create();
+        \App\Plan::insert([
+            [
+                'name' => 'ücretli', 'type' => \App\Plan::MONETARY, 'is_default' => 1
+            ], [
+                'name' => 'ücretsiz', 'type' => \App\Plan::FREE, 'is_default' => 0
+            ]
+        ]);
     }
 }

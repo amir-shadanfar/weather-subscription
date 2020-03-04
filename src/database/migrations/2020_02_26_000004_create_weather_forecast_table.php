@@ -27,6 +27,7 @@ class CreateWeatherForecastTable extends Migration
             $table->float('temp');
             $table->date('date');
             $table->unsignedInteger('city_id');
+            $table->timestamps();
 
             $table->index(["city_id"], 'fk_weather_forecast_cities1_idx');
 

@@ -25,6 +25,7 @@ class CreateGiftCodesTable extends Migration
             $table->increments('id');
             $table->string('code', 45);
             $table->timestamp('expired_at')->nullable();
+            $table->timestamps();
         });
     }
 

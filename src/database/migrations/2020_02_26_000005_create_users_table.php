@@ -26,12 +26,13 @@ class CreateUsersTable extends Migration
             $table->string('email', 100);
             $table->text('password');
             $table->string('language', 20)->nullable();
-            $table->time('timezone');
-            $table->string('operation_system', 10)->nullable();
+            $table->string('timezone');
+            $table->string('operating_system', 10)->nullable();
             $table->text('access_token')->nullable();
             $table->unsignedInteger('plan_id');
             $table->unsignedInteger('gift_code_id')->nullable();
             $table->unsignedInteger('city_id');
+            $table->timestamps();
 
             $table->index(["gift_code_id"]);
             $table->index(["city_id"]);

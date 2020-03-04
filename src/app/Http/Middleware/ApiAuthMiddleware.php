@@ -39,7 +39,6 @@ class ApiAuthMiddleware
         Cache::put($request->header('Access-Token'), [
             'session' => $request->header('Session-Id'),
             'userId'  => $user->id,
-            'name'    => $user->name,
             'mail'    => $user->mail,
         ], 900); // 15 Minutes
 

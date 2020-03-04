@@ -23,9 +23,10 @@ class CreatePlansTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('name', 20)->nullable();
+            $table->string('name', 45)->nullable();
             $table->tinyInteger('type');
             $table->tinyInteger('is_default');
+            $table->timestamps();
         });
     }
 

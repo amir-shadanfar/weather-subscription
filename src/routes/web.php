@@ -12,7 +12,7 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+     return $router->app->version();
 });
 
 
@@ -22,7 +22,7 @@ $router->group(['prefix' => 'api/v1'], function ($router) {
     $router->post('user', 'AuthController@register');
     // need authentication
     $router->group(['middleware' => 'apiauth'], function ($router) {
-        $router->put('user/{id}', 'AuthController@updateProfile');
+        $router->put('user/{id}', 'AuthController@update');
         $router->get('gift/{code}', 'SystemController@activeGiftCode');
     });
 });
